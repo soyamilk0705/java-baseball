@@ -1,4 +1,4 @@
-package study;
+package study.mission0;
 
 import org.junit.jupiter.api.Test;
 
