@@ -28,7 +28,7 @@ public class SetTest {
 
     @Test
     @DisplayName("요구사항 1: Set 의 크기를 확인한다.")
-    void checkSize_success(){
+    void checkSize(){
         assertThat(numbers.size()).isEqualTo(4);
     }
 
@@ -36,7 +36,7 @@ public class SetTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("요구사항 2: contains() 메소드를 활용해 값 존재하는지 확인하며 ParameterizedTest 를 이용해 중복코드를 제거한다.")
-    void isContains_success(int number){
+    void isContainsNumber(int number){
         assertThat(numbers.contains(number)).isTrue();
     }
 
@@ -44,7 +44,7 @@ public class SetTest {
     @ParameterizedTest
     @CsvSource(value = {"1,true", "2,true", "3,true", "4,false", "5,false"})
     @DisplayName("요구사항 3: contains() 메소드를 활용해 값 존재하는지 확인하며 입력값에 따라 true, false 를 반환한다.")
-    void isContains_returnTrueOrFalse_success(int input, boolean expected){
+    void isContains_expectedTrueOrFalse(int input, boolean expected){
         assertThat(numbers.contains(input)).isEqualTo(expected);
     }
 
