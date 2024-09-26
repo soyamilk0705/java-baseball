@@ -1,25 +1,41 @@
 package study;
+import study.exception.DivisionZeroException;
+import study.exception.InvalidFormatException;
+import study.exception.enumclass.ErrorCode;
+import study.exception.InvalidInputException;
+
 import java.util.Scanner;
 
 
 public class StringCalculator {
-    private String[] values;
     private int total;
 
-    public StringCalculator(){
-        Scanner scanner = new Scanner(System.in);
-        String value = scanner.nextLine();
-        values = value.split(" ");
+    public StringCalculator(String value){
+        String[] values = value.split(" ");
 
-        total = Integer.parseInt(values[0]);
+        try{
+            total = Integer.parseInt(values[0]);
 
-        for (int i=1; i<values.length; i+=2){
-            String nowValue = values[i];
-            int nextValue = Integer.parseInt(values[i+1]);
+            for (int i=1; i<values.length; i+=2){
+                String nowValue = values[i];
+                int nextValue = Integer.parseInt(values[i+1]);
 
-            calculator(nowValue, nextValue);
-            System.out.println(total);
+                calculator(nowValue, nextValue);
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidInputException(ErrorCode.INVALID_INPUT);
+        } catch (ArithmeticException e) {
+            throw new DivisionZeroException(ErrorCode.DIVISION_ZERO);
+        } catch (ArrayIndexOutOfBoundsException e){
+            throw new InvalidFormatException(ErrorCode.INVALID_FORMAT);
         }
+
+    }
+
+    public String getFormula(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("수식을 입력해주세요: ");
+        return scanner.nextLine();
     }
 
     public void calculator(String nowValue, int nextValue){
@@ -39,14 +55,6 @@ public class StringCalculator {
         }
     }
 
-
-    public String[] getValues() {
-        return values;
-    }
-
-    public void setValues(String[] values) {
-        this.values = values;
-    }
 
     public int getTotal() {
         return total;
