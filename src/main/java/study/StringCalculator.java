@@ -32,12 +32,6 @@ public class StringCalculator {
 
     }
 
-    public String getFormula(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("수식을 입력해주세요: ");
-        return scanner.nextLine();
-    }
-
     public void calculator(String nowValue, int nextValue){
         switch (nowValue){
             case "+":

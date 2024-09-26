@@ -9,6 +9,6 @@ public class StringCalculatorApplication {
         String value = scanner.nextLine();
 
         StringCalculator calculator = new StringCalculator(value);
-        System.out.println(calculator.getTotal());
+        System.out.println("계산 결과 : " + calculator.getTotal());
     }
 }
