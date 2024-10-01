@@ -1,14 +1,14 @@
 package study;
 
-import java.util.Scanner;
+import study.model.CalculatorScanner;
+import study.model.StringCalculator;
 
 public class StringCalculatorApplication {
     public static void main(String[] args){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("수식을 입력해주세요: ");
-        String value = scanner.nextLine();
+        CalculatorScanner scanner = new CalculatorScanner();
+        String value = scanner.getInput();
 
-        StringCalculator calculator = new StringCalculator(value);
-        System.out.println("계산 결과 : " + calculator.getTotal());
+        StringCalculator calculator = new StringCalculator();
+        System.out.println("계산 결과 : " + calculator.calculate(value));
     }
 }
