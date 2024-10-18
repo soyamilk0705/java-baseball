@@ -1,21 +1,19 @@
 import study.Baseball;
+import study.BaseballGame;
 import study.BaseballScanner;
 
 public class BaseballApplication {
     public static void main(String[] args){
+        BaseballScanner scanner = new BaseballScanner();
         Baseball baseball = new Baseball();
-        boolean isReplay = true;
+        BaseballGame game = new BaseballGame(scanner, baseball);
 
-        while(isReplay){
-            String result = baseball.play();
+        do {
+            String result = game.playGame();
             System.out.println(result);
 
-            BaseballScanner scanner = new BaseballScanner();
-            isReplay = scanner.isReplay();
-        }
+        } while(game.isReplay());
 
-        System.out.println("게임이 종료되었습니다.");
-
-
+        System.out.println(game.endGame());
     }
 }

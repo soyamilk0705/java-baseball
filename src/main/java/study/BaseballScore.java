@@ -19,7 +19,7 @@ public class BaseballScore {
     }
 
 
-    public void checkScore(int index, int i){
+    public void addScore(int index, int i){
         if (index == -1){
             nothingCnt++;
         } else if (index == i){

@@ -9,7 +9,7 @@ public class BaseballScanner {
         this.scanner = new Scanner(System.in);
     }
 
-    public List<Integer> execute() {
+    public List<Integer> askNumbers() {
         System.out.println("숫자를 입력해 주세요 : ");
         String input;
 
@@ -22,6 +22,20 @@ public class BaseballScanner {
         return convertList(input);
     }
 
+    public int askReplay(){
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        int input;
+
+        try{
+            input = validateOneOrTwo(scanner.nextInt());
+        } catch (NoSuchElementException ex){
+            throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        }
+
+        return input;
+
+    }
+
     public String checkLength(String input){
         input = input.replace(" ", "");
 
@@ -29,18 +43,6 @@ public class BaseballScanner {
             throw new NoSuchElementException(ErrorCode.INVALID_INPUT.getMessage());
         }
         return input;
-    }
-
-    public List<Integer> convertList(String input){
-        List<Integer> numbers = new ArrayList<>();
-        String[] inputArr = input.split("");
-
-        for (String str: inputArr){
-            int number = parseStringToInt(str);
-            numbers.add(number);
-        }
-
-        return numbers;
     }
 
     public int parseStringToInt(String str){
@@ -55,25 +57,28 @@ public class BaseballScanner {
         return result;
     }
 
-    public boolean isReplay(){
-        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-        int input;
 
-        try{
-            input = scanner.nextInt();
-        } catch (NoSuchElementException ex){
-            throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+    public List<Integer> convertList(String input){
+        List<Integer> numbers = new ArrayList<>();
+        String[] inputArr = input.split("");
+
+        for (String str: inputArr){
+            int number = parseStringToInt(str);
+            numbers.add(number);
         }
 
-        if (input == 2){
-            return false;
-        } else if(input != 1){
-            throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
-        }
-
-        return true;
-
+        return numbers;
     }
+
+
+    public int validateOneOrTwo(int input){
+        if (input == 1 || input == 2){
+            return input;
+        }
+
+        throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+    }
+
 
     public void close(){
         scanner.close();

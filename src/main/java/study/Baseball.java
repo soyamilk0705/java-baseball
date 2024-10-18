@@ -3,41 +3,33 @@ package study;
 import java.util.*;
 
 public class Baseball {
-    public String play(){
-        List<Integer> answerList = getAnswer();
-        boolean collect = false;
+    private final List<Integer> answerList;
 
-        BaseballScanner scanner = new BaseballScanner();
-        System.out.println(answerList.toString());
-
-        while(!collect){
-            List<Integer> input = scanner.execute();
-            collect = checkAnswer(input, answerList);
-        }
-
-        return "3개의 숫자를 모두 맞히셨습니다! 게임 종료";
+    public Baseball(){
+        answerList = getAnswer();
     }
 
+    public Baseball(List<Integer> answerList) {
+        this.answerList = answerList;
+    }
 
-    public boolean checkAnswer(List<Integer> inputList, List<Integer> answerList){
+    public BaseballScore play(List<Integer> userInput){
         BaseballScore score = new BaseballScore();
 
-        for (int i=0; i<inputList.size(); i++){
-            int index = answerList.indexOf(inputList.get(i));
-            score.checkScore(index, i);
+        for (int i=0; i<userInput.size(); i++){
+            int index = answerList.indexOf(userInput.get(i));
+            score.addScore(index, i);
         }
 
-        System.out.println(score.printScore());
-
-        return score.isThreeStrike();
+        return score;
     }
-
 
     public List<Integer> getAnswer() {
         List<Integer> answers = new ArrayList<>();
+        Random random = new Random();
 
         while(answers.size() < 3){
-            int num = getRandomNumber();
+            int num = random.nextInt(9)+1;
             answers = addUniqueNumber(num, answers);
         }
 
@@ -46,16 +38,11 @@ public class Baseball {
     }
 
     public List<Integer> addUniqueNumber(int num, List<Integer> answers){
-        if (answers.stream().anyMatch(n -> n == num)){
-            return answers;
+        if (!answers.contains(num)){
+            answers.add(num);
         }
 
-        answers.add(num);
         return answers;
     }
 
-    public int getRandomNumber(){
-        Random random = new Random();
-        return random.nextInt(9)+1;
-    }
 }
