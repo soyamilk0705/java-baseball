@@ -33,7 +33,6 @@ public class BaseballGameTest {
         assertEquals(response, "3개의 숫자를 모두 맞히셨습니다! 게임 종료");
     }
 
-
     @Test
     @DisplayName("isReplayScanner(): 재게임 여부 1 입력으로 true 반환")
     void isReplayInput1(){

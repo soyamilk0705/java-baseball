@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BaseballScoreTest {
 
     @Test
-    @DisplayName("checkScore(): 스트라이크인 경우")
-    void addScore_strike(){
+    @DisplayName("addScore(): 스트라이크인 경우")
+    void addScoreStrike(){
         // given
         int index = 1;
         int i = 1;
@@ -25,8 +25,8 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("checkScore(): 볼인 경우")
-    void addScore_ball(){
+    @DisplayName("addScore(): 볼인 경우")
+    void addScoreBall(){
         // given
         int index = 2;
         int i = 1;
@@ -42,8 +42,8 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("checkScore(): ball, strike 둘 다 아닌 경우")
-    void addScore_nothing(){
+    @DisplayName("addScore(): ball, strike 둘 다 아닌 경우")
+    void addScoreNothing(){
         // given
         int index = -1;
         int i = 1;
@@ -85,7 +85,7 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("볼, 스트라이크 점수 출력")
+    @DisplayName("printScore(): 볼, 스트라이크 점수 출력")
     void scorePrintBallAndStrike(){
         // given
         int ballCnt = 1;
@@ -103,7 +103,7 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("3 스트라이크 점수 출력")
+    @DisplayName("printScore(): 3 스트라이크 점수 출력")
     void scorePrint3Strike(){
         // given
         int ballCnt = 0;
@@ -121,7 +121,7 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("스트라이크 점수 출력")
+    @DisplayName("printScore(): 스트라이크 점수 출력")
     void scorePrintStrike(){
         // given
         int ballCnt = 0;
@@ -139,7 +139,7 @@ public class BaseballScoreTest {
     }
 
     @Test
-    @DisplayName("볼 점수 출력")
+    @DisplayName("printScore(): 볼 점수 출력")
     void scorePrintBall(){
         // given
         int ballCnt = 2;
@@ -158,7 +158,7 @@ public class BaseballScoreTest {
 
 
     @Test
-    @DisplayName("낫싱 점수 출력")
+    @DisplayName("printScore(): 낫싱 점수 출력")
     void scorePrintNothing(){
         // given
         int ballCnt = 0;
