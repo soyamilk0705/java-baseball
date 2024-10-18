@@ -1,5 +1,7 @@
 package study;
 
+import study.messages.SuccessMessages;
+
 import java.util.List;
 
 public class BaseballGame {
@@ -22,7 +24,7 @@ public class BaseballGame {
             collect = score.isThreeStrike();
         }
 
-        return "3개의 숫자를 모두 맞히셨습니다! 게임 종료";
+        return SuccessMessages.CORRECT_GAME;
     }
 
     public boolean isReplay(){
@@ -31,7 +33,7 @@ public class BaseballGame {
     }
 
     public String endGame(){
-        return "게임이 종료되었습니다.";
+        return SuccessMessages.END_GAME;
     }
 
 }

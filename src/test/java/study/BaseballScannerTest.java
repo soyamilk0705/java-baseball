@@ -2,6 +2,7 @@ package study;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import study.messages.ErrorMessages;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -48,7 +49,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT);
     }
 
     @Test
@@ -64,7 +65,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class BaseballScannerTest {
         NumberFormatException fail = assertThrows(NumberFormatException.class, scanner::askNumbers);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_NUMBER.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_NUMBER);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT);
     }
 
 
@@ -129,7 +130,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_REPLAY);
     }
 
 
@@ -146,7 +147,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_REPLAY);
     }
 
     @Test
@@ -161,7 +162,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_REPLAY);
     }
 
     
@@ -190,7 +191,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, () -> scanner.checkLength(input));
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT);
     }
 
     @Test
@@ -218,7 +219,7 @@ public class BaseballScannerTest {
         NumberFormatException fail = assertThrows(NumberFormatException.class, () -> scanner.parseStringToInt(input));
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_NUMBER.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_NUMBER);
     }
 
     @Test
@@ -250,7 +251,7 @@ public class BaseballScannerTest {
         NumberFormatException fail = assertThrows(NumberFormatException.class, () -> scanner.convertList(input));
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_NUMBER.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_NUMBER);
     }
 
     @Test
@@ -293,7 +294,7 @@ public class BaseballScannerTest {
         NoSuchElementException fail = assertThrows(NoSuchElementException.class, () -> scanner.validateOneOrTwo(input));
 
         // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        assertEquals(fail.getMessage(), ErrorMessages.INVALID_INPUT_REPLAY);
     }
 
 

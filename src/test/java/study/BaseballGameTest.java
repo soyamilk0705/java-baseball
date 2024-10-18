@@ -2,6 +2,7 @@ package study;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import study.messages.SuccessMessages;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class BaseballGameTest {
         String response = game.playGame();
 
         // then
-        assertEquals(response, "3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+        assertEquals(response, SuccessMessages.CORRECT_GAME);
     }
 
     @Test

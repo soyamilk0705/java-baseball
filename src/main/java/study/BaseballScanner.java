@@ -1,5 +1,7 @@
 package study;
 
+import study.messages.ErrorMessages;
+
 import java.util.*;
 
 public class BaseballScanner {
@@ -16,7 +18,7 @@ public class BaseballScanner {
         try{
             input = checkLength(scanner.next());
         } catch (NoSuchElementException ex){
-            throw new NoSuchElementException(ErrorCode.INVALID_INPUT.getMessage());
+            throw new NoSuchElementException(ErrorMessages.INVALID_INPUT);
         }
 
         return convertList(input);
@@ -29,7 +31,7 @@ public class BaseballScanner {
         try{
             input = validateOneOrTwo(scanner.nextInt());
         } catch (NoSuchElementException ex){
-            throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+            throw new NoSuchElementException(ErrorMessages.INVALID_INPUT_REPLAY);
         }
 
         return input;
@@ -40,7 +42,7 @@ public class BaseballScanner {
         input = input.replace(" ", "");
 
         if (input.length() != 3){
-            throw new NoSuchElementException(ErrorCode.INVALID_INPUT.getMessage());
+            throw new NoSuchElementException(ErrorMessages.INVALID_INPUT);
         }
         return input;
     }
@@ -51,7 +53,7 @@ public class BaseballScanner {
         try{
             result = Integer.parseInt(str);
         } catch (NumberFormatException ex){
-            throw new NumberFormatException(ErrorCode.INVALID_INPUT_NUMBER.getMessage());
+            throw new NumberFormatException(ErrorMessages.INVALID_INPUT_NUMBER);
         }
 
         return result;
@@ -76,7 +78,7 @@ public class BaseballScanner {
             return input;
         }
 
-        throw new NoSuchElementException(ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+        throw new NoSuchElementException(ErrorMessages.INVALID_INPUT_REPLAY);
     }
 
 
