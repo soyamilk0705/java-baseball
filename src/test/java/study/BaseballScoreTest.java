@@ -9,14 +9,14 @@ public class BaseballScoreTest {
 
     @Test
     @DisplayName("checkScore(): 스트라이크인 경우")
-    void checkScore_strike(){
+    void addScore_strike(){
         // given
         int index = 1;
         int i = 1;
 
         // when
         BaseballScore score = new BaseballScore();
-        score.checkScore(index, i);
+        score.addScore(index, i);
 
         // then
         assertEquals(score.getBallCnt(), 0);
@@ -26,14 +26,14 @@ public class BaseballScoreTest {
 
     @Test
     @DisplayName("checkScore(): 볼인 경우")
-    void checkScore_ball(){
+    void addScore_ball(){
         // given
         int index = 2;
         int i = 1;
 
         // when
         BaseballScore score = new BaseballScore();
-        score.checkScore(index, i);
+        score.addScore(index, i);
 
         // then
         assertEquals(score.getBallCnt(), 1);
@@ -43,14 +43,14 @@ public class BaseballScoreTest {
 
     @Test
     @DisplayName("checkScore(): ball, strike 둘 다 아닌 경우")
-    void checkScore_nothing(){
+    void addScore_nothing(){
         // given
         int index = -1;
         int i = 1;
 
         // when
         BaseballScore score = new BaseballScore();
-        score.checkScore(index, i);
+        score.addScore(index, i);
 
         // then
         assertEquals(score.getBallCnt(), 0);

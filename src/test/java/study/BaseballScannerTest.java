@@ -8,13 +8,18 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BaseballScannerTest {
 
+    // <scanner 테스트 하기 위해 System.setIn() 사용 시 주의할 점>
+    // System.in 에 대한 입력 스트림이 설정 되기 전에 scanner 가 초기화 되면 scanner 가 읽을 데이터가 없는 상태가 될 수 있음
+    // 특히 @BeforeEach 사용 시 System.in 설정 전에 먼저 객체가 생성되서 입력값이 없어서 예외 발생함
+
     @Test
-    @DisplayName("execute(): 사용자 입력 성공")
-    void execute(){
+    @DisplayName("askNumbers(): 사용자 입력 성공")
+    void askNumbers(){
         // given
         String input = "456";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -22,7 +27,7 @@ public class BaseballScannerTest {
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        List<Integer> response = scanner.execute();
+        List<Integer> response = scanner.askNumbers();
 
         // then
         assertEquals(response.get(0), 4);
@@ -31,8 +36,8 @@ public class BaseballScannerTest {
     }
 
     @Test
-    @DisplayName("execute(): 공백이 포함된 숫자 입력으로 예외 발생")
-    void executeContainEmpty_exception(){
+    @DisplayName("askNumbers(): 공백이 포함된 숫자 입력으로 예외 발생")
+    void askNumbersContainEmpty_exception(){
         // given
         String input = "4 6";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -40,15 +45,15 @@ public class BaseballScannerTest {
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::execute);
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
         assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
     }
 
     @Test
-    @DisplayName("execute(): 숫자 3자리 이상을 입력으로 예외 발생")
-    void executeInputOverSizeThree_exception(){
+    @DisplayName("askNumbers(): 숫자 3자리 이상을 입력으로 예외 발생")
+    void askNumbersInputOverSizeThree_exception(){
         // given
         String input = "123456";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -56,15 +61,15 @@ public class BaseballScannerTest {
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::execute);
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
         assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
     }
 
     @Test
-    @DisplayName("execute(): 문자열 입력으로 예외 발생")
-    void executeInputString_exception(){
+    @DisplayName("askNumbers(): 문자열 입력으로 예외 발생")
+    void askNumbersInputString_exception(){
         // given
         String input = "문자열";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -72,15 +77,15 @@ public class BaseballScannerTest {
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        NumberFormatException fail = assertThrows(NumberFormatException.class, scanner::execute);
+        NumberFormatException fail = assertThrows(NumberFormatException.class, scanner::askNumbers);
 
         // then
         assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_NUMBER.getMessage());
     }
 
     @Test
-    @DisplayName("execute(): 공백 입력으로 예외 발생")
-    void executeInputEmpty_exception(){
+    @DisplayName("askNumbers(): 공백 입력으로 예외 발생")
+    void askNumbersInputEmpty_exception(){
         // given
         String input = " ";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -88,12 +93,78 @@ public class BaseballScannerTest {
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::execute);
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askNumbers);
 
         // then
         assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT.getMessage());
     }
 
+
+    @Test
+    @DisplayName("askReplay(): 재게임 입력 성공")
+    void askReplay(){
+        // given
+        String input = "1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // when
+        BaseballScanner scanner = new BaseballScanner();
+        int response = scanner.askReplay();
+
+        // then
+        assertEquals(response, Integer.parseInt(input));
+    }
+
+    @Test
+    @DisplayName("askReplay(): 문자열 입력으로 예외 발생")
+    void askReplayInputString_exception(){
+        // given
+        String input = "문자열";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // when
+        BaseballScanner scanner = new BaseballScanner();
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
+
+        // then
+        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+    }
+
+
+    @Test
+    @DisplayName("askReplay(): 공백 입력으로 예외 발생")
+    void askReplayInputEmpty_exception(){
+        // given
+        String input = " ";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // when
+        BaseballScanner scanner = new BaseballScanner();
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
+
+        // then
+        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+    }
+
+    @Test
+    @DisplayName("askReplay(): 숫자 1 또는 2 이외의 숫자 입력으로 예외 발생")
+    void askReplayInputTwoNumber_exception(){
+        String input = "34";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // when
+        BaseballScanner scanner = new BaseballScanner();
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::askReplay);
+
+        // then
+        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
+    }
+
+    
     @Test
     @DisplayName("checkLength(): 숫자 3자리 검증 성공")
     void checkLength(){
@@ -166,6 +237,8 @@ public class BaseballScannerTest {
         assertEquals(response.get(2), 3);
     }
 
+
+
     @Test
     @DisplayName("convertList(): 문자열 숫자 리스트 변환 실패로 예외 발생")
     void convertListInputString_exception(){
@@ -181,83 +254,47 @@ public class BaseballScannerTest {
     }
 
     @Test
-    @DisplayName("isReplayScanner(): 재게임 여부 1 입력으로 true 반환")
-    void isReplayInput1(){
+    @DisplayName("validateOneOrTwo(): 숫자 1 입력으로 성공")
+    void validateOneOrTwoInput1(){
         // given
-        String input = "1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+        int input = 1;
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        boolean response = scanner.isReplay();
+        int response = scanner.validateOneOrTwo(input);
 
         // then
-        assertTrue(response);
+        assertEquals(response, input);
     }
 
     @Test
-    @DisplayName("isReplayScanner(): 재게임 여부 2 입력으로 false 반환")
-    void isReplayInput2(){
+    @DisplayName("validateOneOrTwo(): 숫자 2 입력으로 성공")
+    void validateOneOrTwoInput2(){
         // given
-        String input = "2";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+        int input = 2;
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        boolean response = scanner.isReplay();
+        int response = scanner.validateOneOrTwo(input);
 
         // then
-        assertFalse(response);
+        assertEquals(response, input);
     }
 
+
     @Test
-    @DisplayName("isReplayScanner(): 문자열 입력으로 예외 발생")
-    void isReplayInputString_exception(){
+    @DisplayName("validateOneOrTwo(): 1이나 2가 아닌 숫자 입력으로 예외 발생")
+    void validateOneOrTwoInputEither1Or2_exception(){
         // given
-        String input = "문자열";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+        int input = 222;
 
         // when
         BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::isReplay);
+        NoSuchElementException fail = assertThrows(NoSuchElementException.class, () -> scanner.validateOneOrTwo(input));
 
         // then
         assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
     }
 
-
-    @Test
-    @DisplayName("isReplayScanner(): 숫자 2자리 입력")
-    void isReplayInputTwoNumber_exception(){
-        String input = "34";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        // when
-        BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::isReplay);
-
-        // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
-    }
-
-    @Test
-    @DisplayName("execute(): 공백 입력으로 예외 발생")
-    void isReplayInputEmpty_exception(){
-        // given
-        String input = " ";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        // when
-        BaseballScanner scanner = new BaseballScanner();
-        NoSuchElementException fail = assertThrows(NoSuchElementException.class, scanner::isReplay);
-
-        // then
-        assertEquals(fail.getMessage(), ErrorCode.INVALID_INPUT_REPLAY.getMessage());
-    }
 
 }

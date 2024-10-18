@@ -3,6 +3,7 @@ package study;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
@@ -17,59 +18,80 @@ import static org.mockito.Mockito.when;
 public class BaseballTest {
 
     @Test
-    @DisplayName("3스트라이크")
+    @DisplayName("play(): 3 스트라이크")
     void play3Strike(){
-        // given
-        Baseball baseball = Mockito.spy(new Baseball());
-
-        List<Integer> answerList = Arrays.asList(1, 2, 3);
-        when(baseball.getAnswer()).thenReturn(answerList);
-
-        String input = "123";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        // when
-        String response = baseball.play();
-
-        // then
-        assertEquals(response, "3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-
-    }
-
-
-    @Test
-    @DisplayName("checkAnswer(): 3 스트라이크")
-    void checkAnswer_3Strike(){
         // given
         List<Integer> inputList = Arrays.asList(3, 5, 6);
         List<Integer> answerList = Arrays.asList(3, 5, 6);
 
         // when
-        Baseball baseball = new Baseball();
-        boolean response = baseball.checkAnswer(inputList, answerList);
+        Baseball baseball = new Baseball(answerList);
+        BaseballScore response = baseball.play(inputList);
 
         // then
-        assertTrue(response);
+        assertEquals(response.getStrikeCnt(), 3);
+        assertEquals(response.getBallCnt(), 0);
+        assertEquals(response.getNothingCnt(), 0);
     }
 
     @Test
-    @DisplayName("checkAnswer(): 3 스트라이크 아닌 경우")
-    void checkAnswerNot3Strike(){
+    @DisplayName("play(): 1 스트라이크 2볼")
+    void play1Strike2Ball(){
         // given
         List<Integer> inputList = Arrays.asList(3, 5, 6);
-        List<Integer> answerList = Arrays.asList(3, 8, 1);
+        List<Integer> answerList = Arrays.asList(3, 6, 5);
 
         // when
-        Baseball baseball = new Baseball();
-        boolean response = baseball.checkAnswer(inputList, answerList);
+        Baseball baseball = new Baseball(answerList);
+        BaseballScore response = baseball.play(inputList);
 
         // then
-        assertFalse(response);
+        assertEquals(response.getStrikeCnt(), 1);
+        assertEquals(response.getBallCnt(), 2);
+        assertEquals(response.getNothingCnt(), 0);
+    }
+
+    @Test
+    @DisplayName("play(): 3볼")
+    void play3Ball(){
+        // given
+        List<Integer> inputList = Arrays.asList(3, 5, 6);
+        List<Integer> answerList = Arrays.asList(5, 6, 3);
+
+
+        // when
+        Baseball baseball = new Baseball(answerList);
+        BaseballScore response = baseball.play(inputList);
+
+        // then
+        assertEquals(response.getStrikeCnt(), 0);
+        assertEquals(response.getBallCnt(), 3);
+        assertEquals(response.getNothingCnt(), 0);
+
+    }
+
+    @Test
+    @DisplayName("play(): 낫싱")
+    void playNothing(){
+        // given
+        List<Integer> inputList = Arrays.asList(3, 5, 6);
+        List<Integer> answerList = Arrays.asList(7, 8, 9);
+
+
+        // when
+        Baseball baseball = new Baseball(answerList);
+        BaseballScore response = baseball.play(inputList);
+
+
+        // then
+        assertEquals(response.getStrikeCnt(), 0);
+        assertEquals(response.getBallCnt(), 0);
+        assertEquals(response.getNothingCnt(), 3);
+
     }
 
 
-    @Test
+    @RepeatedTest(10) // 10번 반복 테스트
     @DisplayName("getAnswer() 성공: 랜덤 3자리 수 생성")
     void getAnswer(){
         // given
@@ -126,17 +148,4 @@ public class BaseballTest {
         assertEquals(response.get(1), answers.get(1));
     }
 
-
-    @RepeatedTest(10) // 10번 반복 테스트
-    @DisplayName("getRandomNumber() 성공: 1부터 9까지 랜덤 수 생성 성공")
-    void getRandomNumber(){
-        // given
-        // when
-        Baseball baseball = new Baseball();
-        int response = baseball.getRandomNumber();
-
-        // then
-        System.out.println("response : " + response);
-        assertTrue(response > 0 && response <= 9);
-    }
 }
